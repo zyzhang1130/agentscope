@@ -25,6 +25,9 @@ doc_requires = ["sphinx", "sphinx-autobuild", "sphinx_rtd_theme"]
 
 test_requires = ["pytest", "pytest-cov", "pre-commit"]
 
+game_requires = ["inquirer", "colorist", "dashscope", "gradio", "pyyaml",
+                 "pypinyin", "modelscope_studio", "oss2"]
+
 # released requires
 minimal_requires = [
     "loguru",
@@ -45,6 +48,7 @@ full_requires = (
     + service_requires
     + doc_requires
     + test_requires
+    + game_requires
 )
 
 with open("README.md", "r", encoding="UTF-8") as fh:
@@ -65,6 +69,7 @@ setuptools.setup(
     packages=setuptools.find_packages("src"),
     install_requires=minimal_requires,
     extras_require={
+        "game": game_requires,
         "distribute": distribute_requires,
         "dev": dev_requires,
         "full": full_requires,

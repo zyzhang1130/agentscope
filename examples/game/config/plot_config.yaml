@@ -1,0 +1,37 @@
+- "plot_id": 1
+  "plot_stages":
+    - 0
+    - 1
+  "predecessor_plots": null
+  "main_roles":
+    - "王先生"
+  "supporting_roles":
+    - "阿炳"
+    - "老许"
+    - "范老师"
+  "max_unblock_plots": 1
+  "unblock_following_plots": null
+  max_attempts: 2
+  "plot_descriptions":
+    "task": >
+      找到招财猫
+    "openings": >
+      这天早上，我刚准备出门去采买今天的食材，街道对面开茶叶店的王先生就慌慌张张地向我跑来...
+    "opening_image": > 
+      生成一张图片，图片内容是一名小偷。小偷拿着一只招财猫陶瓷玩偶。
+    "user_openings_option":
+      "0": >
+        什么时候发现不见的？
+      "1": >
+        有没有可疑的人？
+      "2": >
+        招财猫有什么特殊的？
+    "npc_openings": >
+      老板，我发现我的招财猫吉祥物不见了！就是那个我店里招财猫陶瓷玩偶！
+    "npc_quit_openings": >
+      哎，老板，反正你帮我打听打听吧！（说完，王先生就慌慌张张地跑开了）
+    "done_hint": >
+      嫌疑人中有且只有一个角色撒了谎，并且他就是拿走招财猫的人。你知道谁拿走了王先生的招财猫吗？告诉王先生是谁拿了他的招财猫，找到正确的小偷才能算成功！
+      举个例子，你可以这样回答：“是XXX拿走了王先生的招财猫。”
+    "done_condition": >
+      阿炳拿（偷）走了王先生的招财猫
