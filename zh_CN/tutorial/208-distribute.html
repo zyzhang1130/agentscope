@@ -26,8 +26,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="参与贡献" href="contribute.html" />
-    <link rel="prev" title="监控器" href="207-monitor.html" /> 
+    <link rel="next" title="AgentScope Studio" href="209-gui.html" />
+    <link rel="prev" title="Pipeline和MsgHub" href="202-pipeline.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -55,27 +55,41 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
               <p class="caption" role="heading"><span class="caption-text">AgentScope 教程</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quick_start.html">快速上手</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="advance.html">进阶使用</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="201-agent.html">定制你自己的Agent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="202-pipeline.html">Pipeline 和 MsgHub</a></li>
-<li class="toctree-l2"><a class="reference internal" href="203-model.html">模型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="203-parser.html">模型结果解析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="204-service.html">服务函数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="205-memory.html">记忆</a></li>
-<li class="toctree-l2"><a class="reference internal" href="206-prompt.html">提示工程</a></li>
-<li class="toctree-l2"><a class="reference internal" href="207-monitor.html">监控器</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">分布式</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">使用方法</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">步骤1: 转化为分布式版本</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">步骤2: 编排分布式应用流程</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id7">实现原理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="101-agentscope.html">关于AgentScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="102-installation.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="103-example.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="203-model.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="206-prompt.html">提示工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="201-agent.html">Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="205-memory.html">记忆</a></li>
+<li class="toctree-l1"><a class="reference internal" href="203-parser.html">结果解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="209-prompt_opt.html">系统提示优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="204-service.html">工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="202-pipeline.html">Pipeline和MsgHub</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">分布式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">使用方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">步骤1: 转化为分布式版本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">子进程模式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">独立进程模式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#to-dist"><code class="docutils literal notranslate"><span class="pre">to_dist</span></code> 进阶用法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">步骤2: 编排分布式应用流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">实现原理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#actor">Actor模式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#placeholder">Placeholder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#agent-server">Agent Server</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="209-gui.html">AgentScope Studio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="210-rag.html">简要介绍AgentScope中的RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="105-logging.html">日志</a></li>
+<li class="toctree-l1"><a class="reference internal" href="207-monitor.html">监控器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="104-usecase.html">样例：狼人杀游戏</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">参与贡献</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AgentScope API 文档</span></p>
@@ -110,7 +124,6 @@
           <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="advance.html">进阶使用</a></li>
       <li class="breadcrumb-item active">分布式</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/tutorial/208-distribute.md.txt" rel="nofollow"> 查看页面源码</a>
@@ -354,12 +367,12 @@ D--&gt;F
 通过将每个Agent实现为一个Actor， Agent将自动等待其输入Msg准备好后开始执行<code class="docutils literal notranslate"><span class="pre">reply</span></code>方法，并且如果多个 Agent 的输入消息准备就绪，它们也可以同时自动执行<code class="docutils literal notranslate"><span class="pre">reply</span></code>，这避免了复杂的并行控制。</p>
 </section>
 <section id="placeholder">
-<h4>PlaceHolder<a class="headerlink" href="#placeholder" title="Link to this heading"></a></h4>
+<h4>Placeholder<a class="headerlink" href="#placeholder" title="Link to this heading"></a></h4>
 <p>同时，为了支持中心化的应用编排，AgentScope 引入了 <a class="reference internal" href="../agentscope.message.html#agentscope.message.PlaceholderMessage" title="agentscope.message.PlaceholderMessage"><code class="xref py py-class docutils literal notranslate"><span class="pre">Placeholder</span></code></a> 这一概念。
 Placeholder 可以理解为消息的指针，指向消息真正产生的位置，其对外接口与传统模式中的消息完全一致，因此可以按照传统中心化的消息使用方式编排应用。
 Placeholder 内部包含了该消息产生方的联络方法，可以通过网络获取到被指向消息的真正值。
 每个分布式部署的 Agent 在收到其他 Agent 发来的消息时都会立即返回一个 Placeholder，从而避免阻塞请求发起方。
-而请求发起方可以借助返回的 Placeholder 在真正需要消息内容时再去向原 Agent 发起请求，请求发起方甚至可以将 Placholder 发送给其他 Agent 让其他 Agent 代为获取消息内容，从而减少消息真实内容的不必要转发。</p>
+而请求发起方可以借助返回的 Placeholder 在真正需要消息内容时再去向原 Agent 发起请求，请求发起方甚至可以将 Placeholder 发送给其他 Agent 让其他 Agent 代为获取消息内容，从而减少消息真实内容的不必要转发。</p>
 <p>关于更加详细的技术实现方案，请参考我们的<a class="reference external" href="https://arxiv.org/abs/2402.14034">论文</a>。</p>
 </section>
 <section id="agent-server">
@@ -378,8 +391,8 @@ Placeholder 内部包含了该消息产生方的联络方法，可以通过网�
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="207-monitor.html" class="btn btn-neutral float-left" title="监控器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="contribute.html" class="btn btn-neutral float-right" title="参与贡献" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="202-pipeline.html" class="btn btn-neutral float-left" title="Pipeline和MsgHub" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="209-gui.html" class="btn btn-neutral float-right" title="AgentScope Studio" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

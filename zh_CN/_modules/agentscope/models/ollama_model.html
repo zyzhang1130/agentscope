@@ -52,8 +52,23 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
               <p class="caption" role="heading"><span class="caption-text">AgentScope 教程</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/quick_start.html">快速上手</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/advance.html">进阶使用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/101-agentscope.html">关于AgentScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/102-installation.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/103-example.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/203-model.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/206-prompt.html">提示工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/201-agent.html">Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/205-memory.html">记忆</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/203-parser.html">结果解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/209-prompt_opt.html">系统提示优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/204-service.html">工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/202-pipeline.html">Pipeline和MsgHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/208-distribute.html">分布式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/209-gui.html">AgentScope Studio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/210-rag.html">简要介绍AgentScope中的RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/105-logging.html">日志</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/207-monitor.html">监控器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial/104-usecase.html">样例：狼人杀游戏</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial/contribute.html">参与贡献</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AgentScope API 文档</span></p>
@@ -105,7 +120,7 @@
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">agentscope.message</span> <span class="kn">import</span> <span class="n">MessageBase</span>
+<span class="kn">from</span> <span class="nn">agentscope.message</span> <span class="kn">import</span> <span class="n">Msg</span>
 <span class="kn">from</span> <span class="nn">agentscope.models</span> <span class="kn">import</span> <span class="n">ModelWrapperBase</span><span class="p">,</span> <span class="n">ModelResponse</span>
 <span class="kn">from</span> <span class="nn">agentscope.utils.tools</span> <span class="kn">import</span> <span class="n">_convert_to_str</span>
 
@@ -278,7 +293,7 @@
 <a class="viewcode-back" href="../../../agentscope.models.ollama_model.html#agentscope.models.OllamaChatWrapper.format">[文档]</a>
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">MessageBase</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">MessageBase</span><span class="p">]],</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Msg</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Msg</span><span class="p">]],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Format the messages for ollama Chat API.</span>
 
@@ -319,7 +334,7 @@
 
 
 <span class="sd">        Args:</span>
-<span class="sd">            args (`Union[MessageBase, Sequence[MessageBase]]`):</span>
+<span class="sd">            args (`Union[Msg, Sequence[Msg]]`):</span>
 <span class="sd">                The input arguments to be formatted, where each argument</span>
 <span class="sd">                should be a `Msg` object, or a list of `Msg` objects.</span>
 <span class="sd">                In distribution, placeholder is also allowed.</span>
@@ -334,11 +349,9 @@
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">MessageBase</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Msg</span><span class="p">):</span>
                 <span class="n">input_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
-                <span class="nb">isinstance</span><span class="p">(</span><span class="n">__</span><span class="p">,</span> <span class="n">MessageBase</span><span class="p">)</span> <span class="k">for</span> <span class="n">__</span> <span class="ow">in</span> <span class="n">_</span>
-            <span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">__</span><span class="p">,</span> <span class="n">Msg</span><span class="p">)</span> <span class="k">for</span> <span class="n">__</span> <span class="ow">in</span> <span class="n">_</span><span class="p">):</span>
                 <span class="n">input_msgs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
@@ -472,7 +485,7 @@
 <a class="viewcode-back" href="../../../agentscope.models.ollama_model.html#agentscope.models.OllamaEmbeddingWrapper.format">[文档]</a>
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">MessageBase</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">MessageBase</span><span class="p">]],</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Msg</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Msg</span><span class="p">]],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="nb">str</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;Model Wrapper [</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">] doesn&#39;t &quot;</span>
@@ -582,11 +595,11 @@
 
 <div class="viewcode-block" id="OllamaGenerationWrapper.format">
 <a class="viewcode-back" href="../../../agentscope.models.ollama_model.html#agentscope.models.OllamaGenerationWrapper.format">[文档]</a>
-    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">MessageBase</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">MessageBase</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Msg</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Msg</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward the input to the model.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            args (`Union[MessageBase, Sequence[MessageBase]]`):</span>
+<span class="sd">            args (`Union[Msg, Sequence[Msg]]`):</span>
 <span class="sd">                The input arguments to be formatted, where each argument</span>
 <span class="sd">                should be a `Msg` object, or a list of `Msg` objects.</span>
 <span class="sd">                In distribution, placeholder is also allowed.</span>
@@ -599,11 +612,9 @@
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">MessageBase</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Msg</span><span class="p">):</span>
                 <span class="n">input_msgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span>
-                <span class="nb">isinstance</span><span class="p">(</span><span class="n">__</span><span class="p">,</span> <span class="n">MessageBase</span><span class="p">)</span> <span class="k">for</span> <span class="n">__</span> <span class="ow">in</span> <span class="n">_</span>
-            <span class="p">):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">__</span><span class="p">,</span> <span class="n">Msg</span><span class="p">)</span> <span class="k">for</span> <span class="n">__</span> <span class="ow">in</span> <span class="n">_</span><span class="p">):</span>
                 <span class="n">input_msgs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>

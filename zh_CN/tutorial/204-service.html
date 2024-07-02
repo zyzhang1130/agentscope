@@ -5,7 +5,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>服务函数 &mdash; AgentScope  文档</title>
+  <title>工具 &mdash; AgentScope  文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=c9484b72" />
@@ -24,8 +24,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="记忆" href="205-memory.html" />
-    <link rel="prev" title="模型结果解析" href="203-parser.html" /> 
+    <link rel="next" title="Pipeline和MsgHub" href="202-pipeline.html" />
+    <link rel="prev" title="系统提示优化" href="209-prompt_opt.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,28 +53,36 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
               <p class="caption" role="heading"><span class="caption-text">AgentScope 教程</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quick_start.html">快速上手</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="advance.html">进阶使用</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="201-agent.html">定制你自己的Agent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="202-pipeline.html">Pipeline 和 MsgHub</a></li>
-<li class="toctree-l2"><a class="reference internal" href="203-model.html">模型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="203-parser.html">模型结果解析</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">服务函数</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#service">Service函数概览</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">使用Service函数</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#servicetoolkit">关于ServiceToolkit</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#serviceresponse">关于ServiceResponse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="101-agentscope.html">关于AgentScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="102-installation.html">安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="103-example.html">快速开始</a></li>
+<li class="toctree-l1"><a class="reference internal" href="203-model.html">模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="206-prompt.html">提示工程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="201-agent.html">Agent</a></li>
+<li class="toctree-l1"><a class="reference internal" href="205-memory.html">记忆</a></li>
+<li class="toctree-l1"><a class="reference internal" href="203-parser.html">结果解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="209-prompt_opt.html">系统提示优化</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#service">Service函数概览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">使用Service函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#servicetoolkit">关于ServiceToolkit</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">如何使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">创建新的Service函数</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#serviceresponse">关于ServiceResponse</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="205-memory.html">记忆</a></li>
-<li class="toctree-l2"><a class="reference internal" href="206-prompt.html">提示工程</a></li>
-<li class="toctree-l2"><a class="reference internal" href="207-monitor.html">监控器</a></li>
-<li class="toctree-l2"><a class="reference internal" href="208-distribute.html">分布式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">示例</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="202-pipeline.html">Pipeline和MsgHub</a></li>
+<li class="toctree-l1"><a class="reference internal" href="208-distribute.html">分布式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="209-gui.html">AgentScope Studio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="210-rag.html">简要介绍AgentScope中的RAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="105-logging.html">日志</a></li>
+<li class="toctree-l1"><a class="reference internal" href="207-monitor.html">监控器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="104-usecase.html">样例：狼人杀游戏</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contribute.html">参与贡献</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">AgentScope API 文档</span></p>
@@ -109,8 +117,7 @@
           <div role="navigation" aria-label="页面导航">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="advance.html">进阶使用</a></li>
-      <li class="breadcrumb-item active">服务函数</li>
+      <li class="breadcrumb-item active">工具</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/tutorial/204-service.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
@@ -121,7 +128,7 @@
            <div itemprop="articleBody">
              
   <section id="service-zh">
-<span id="id1"></span><h1>服务函数<a class="headerlink" href="#service-zh" title="Link to this heading"></a></h1>
+<span id="id1"></span><h1>工具<a class="headerlink" href="#service-zh" title="Link to this heading"></a></h1>
 <p>服务函数（Service function）是可以增强智能体能力工具，例如执行Python代码、网络搜索、
 文件操作等。本教程概述了AgentScope中可用的服务功能，同时介绍如何使用它们来增强智能体的能力。</p>
 <section id="service">
@@ -239,7 +246,19 @@
 <td><p><code class="docutils literal notranslate"><span class="pre">write_json_file</span></code></p></td>
 <td><p>将 Python 对象序列化为 JSON 并写入到文件。</p></td>
 </tr>
-<tr class="row-even"><td><p><em>更多服务即将推出</em></p></td>
+<tr class="row-even"><td><p>多模态</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dashscope_text_to_image</span></code></p></td>
+<td><p>使用 DashScope API 将文本生成图片。</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dashscope_image_to_text</span></code></p></td>
+<td><p>使用 DashScope API 根据图片生成文字。</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">dashscope_text_to_audio</span></code></p></td>
+<td><p>使用 DashScope API 根据文本生成音频。</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>更多服务即将推出</em></p></td>
 <td><p></p></td>
 <td><p>正在开发更多服务功能，并将添加到 AgentScope 以进一步增强其能力。</p></td>
 </tr>
@@ -461,7 +480,7 @@ arguments两个字段，其中name为函数名，arguments为函数参数。argu
 <span class="k">class</span> <span class="nc">YourAgent</span><span class="p">(</span><span class="n">AgentBase</span><span class="p">):</span>
     <span class="c1"># ... [为简洁起见省略代码]</span>
 
-    <span class="k">def</span> <span class="nf">reply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">reply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Msg</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Msg</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Msg</span><span class="p">:</span>
         <span class="c1"># ... [为简洁起见省略代码]</span>
 
         <span class="c1"># 构造提示，让代理提供 JSON 格式的参数</span>
@@ -506,8 +525,8 @@ arguments两个字段，其中name为函数名，arguments为函数参数。argu
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="203-parser.html" class="btn btn-neutral float-left" title="模型结果解析" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="205-memory.html" class="btn btn-neutral float-right" title="记忆" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="209-prompt_opt.html" class="btn btn-neutral float-left" title="系统提示优化" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="202-pipeline.html" class="btn btn-neutral float-right" title="Pipeline和MsgHub" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
