@@ -1,6 +1,0 @@
-agentscope.models.config
-========================
-.. automodule:: agentscope.models.config
-   :members:
-   :undoc-members:
-   :show-inheritance:
