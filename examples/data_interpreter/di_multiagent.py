@@ -127,8 +127,9 @@ STRUCTUAL_PROMPT = """
 
 def main() -> None:
 
-    def problem_solving():
-        subtasks = planner_agent(task)
+    def problem_solving(task):
+        task_msg = Msg(name="Planner", role="system", content=task)
+        subtasks = planner_agent(task_msg)
         solved_dependent_sub_tasks = ""
 
         for subtask in range(len(subtasks)):
@@ -156,8 +157,10 @@ def main() -> None:
                     )
                     failure_count += 1
                 if failure_count > max_failure:
-                    revised_subtasks = replanning_agent._revising_subtasks(
-                        "overall_task: "
+                    msg = Msg(
+                        name="replanner",
+                        role="system",
+                        content="overall_task: "
                         + task
                         + " solved_dependent_sub_tasks: "
                         + solved_dependent_sub_tasks
@@ -170,7 +173,10 @@ def main() -> None:
                         + "all_subtasks: "
                         + str(subtasks),
                     )
+                    revised_subtasks = replanning_agent(msg)
                 result = sovler_agent(msg)
+                # if "Let me know how you'd like to proceed!" in result.content:
+                #     failure_count = max_failure+1
                 msg = Msg(
                     name="Verifier",
                     role="system",
@@ -334,7 +340,7 @@ def main() -> None:
     # task = "Create a Snake game. Players need to control the movement of the snake to eat food and grow its body, while avoiding the snake's head touching their own body or game boundaries. Games need to have basic game logic, user interface. During the production process, please consider factors such as playability, beautiful interface, and convenient operation of the game. Note: pyxel environment already satisfied"
     # task = "Get products data from website https://scrapeme.live/shop/ and save it as a csv file. Notice: Firstly parse the web page encoding and the text HTML structure; The first page product name, price, product URL, and image URL must be saved in the csv;"
 
-    final_answer = problem_solving()
+    final_answer = problem_solving(task)
     print("final_answer: ", final_answer)
 
 
