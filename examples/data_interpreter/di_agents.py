@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import json
 import csv
@@ -89,7 +90,6 @@ def write_csv_file(
             status=ServiceExecStatus.ERROR,
             content=error_message,
         )
-    
 
 
 class PlannerAgent(AgentBase):
@@ -120,7 +120,9 @@ class PlannerAgent(AgentBase):
         return subtasks
 
     def _decompose_task(
-        self, task: str, max_tasks: int = 5
+        self,
+        task: str,
+        max_tasks: int = 5,
     ) -> List[Dict[str, Any]]:
         # Implement task decomposition
         message = [

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import csv
 import os
-import json
 from dotenv import load_dotenv, find_dotenv
 from typing import Any, Dict, List, Optional, Union, Sequence
 import agentscope
