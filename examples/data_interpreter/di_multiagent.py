@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=C0301
 """
 This script demonstrates task solving with a data interpreter pipeline
 formed by multiple agents, each specialized in one aspect of problem solving.
@@ -38,13 +39,14 @@ def read_csv_file(file_path: str) -> ServiceResponse:
 
     Returns:
         `ServiceResponse`: Where the boolean indicates success, the
-        Any is the parsed CSV content (typically a list of rows), and the str contains
-        an error message if any, including the error type.
+        Any is the parsed CSV content (typically a list of rows),
+        and the str contains an error message if any, including
+        the error type.
     """
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             reader = csv.reader(file)
-            data = [row for row in reader]
+            data: List[List[str]] = list(reader)
         return ServiceResponse(
             status=ServiceExecStatus.SUCCESS,
             content=data,
@@ -125,7 +127,7 @@ STRUCTUAL_PROMPT = """
     """
 
 
-def problem_solving(input_task: str) -> str:
+def problem_solving(task: str) -> str:
     """
     Solves a given complex task by decomposing it into subtasks, planning,
     solving, verifying, and synthesizing the final answer.
@@ -219,7 +221,7 @@ def problem_solving(input_task: str) -> str:
                     subtask_index += 1
                     # Break out of the failure loop
                     break
-                elif decision == "replan_subtask":
+                if decision == "replan_subtask":
                     # Update subtasks with the new plan
                     print("Replanning current and subsequent subtasks...")
                     # Replace current and subsequent subtasks
@@ -227,10 +229,9 @@ def problem_solving(input_task: str) -> str:
                     # subtask_index remains the same to retry solving the current subtask
                     # Break out to restart processing with the new plan
                     break
-                else:
-                    raise ValueError(
-                        "Unknown decision from replanning_agent.",
-                    )
+                raise ValueError(
+                    "Unknown decision from replanning_agent.",
+                )
             # Proceed with solving the subtask
             result = solver_agent(msg)
             msg_verifier: Msg = Msg(
@@ -352,7 +353,6 @@ synthesizer_agent = SynthesizerAgent(
     name="synthesizer",
     sys_prompt="You're a helpful assistant.",
     model_config_name="lite_llm_claude",
-    service_toolkit=service_toolkit,
 )
 
 replanning_agent = ReplanningAgent(
@@ -362,7 +362,7 @@ replanning_agent = ReplanningAgent(
     service_toolkit=service_toolkit,
 )
 
-task = "Solve this math problem: The greatest common divisor of positive integers m and n is 6. The least common multiple of m and n is 126. What is the least possible value of m + n?"
+input_task = "Solve this math problem: The greatest common divisor of positive integers m and n is 6. The least common multiple of m and n is 126. What is the least possible value of m + n?"
 
 #     template = "https://arxiv.org/list/{tag}/pastweek?skip=0&show=50"
 #     tags = ["cs.ai", "cs.cl", "cs.ls", "cs.se"]
@@ -408,5 +408,5 @@ task = "Solve this math problem: The greatest common divisor of positive integer
 # task = "Create a Snake game. Players need to control the movement of the snake to eat food and grow its body, while avoiding the snake's head touching their own body or game boundaries. Games need to have basic game logic, user interface. During the production process, please consider factors such as playability, beautiful interface, and convenient operation of the game. Note: pyxel environment already satisfied"
 # task = "Get products data from website https://scrapeme.live/shop/ and save it as a csv file. Notice: Firstly parse the web page encoding and the text HTML structure; The first page product name, price, product URL, and image URL must be saved in the csv;"
 
-final_solution = problem_solving(task)
+final_solution = problem_solving(input_task)
 print("final solution: ", final_solution)

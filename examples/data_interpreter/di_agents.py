@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+# pylint: disable=C0301
 """
 This script defines all the agents used in the data interpreter pipeline.
 """
 import os
 import csv
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional, Union, Sequence
 from agentscope.agents import ReActAgent
 from agentscope.agents.agent import AgentBase
 from agentscope.message import Msg
@@ -26,8 +27,8 @@ def read_csv_file(file_path: str) -> ServiceResponse:
 
     Returns:
         `ServiceResponse`: Where the boolean indicates success, the
-        Any is the parsed CSV content (typically a list of rows), and the str contains
-        an error message if any, including the error type.
+        Any is the parsed CSV content (typically a list of rows), and
+        the str contains an error message if any, including the error type.
     """
     try:
         with open(file_path, "r", encoding="utf-8") as file:
@@ -57,7 +58,8 @@ def write_csv_file(
         file_path (`str`):
             The path to the file where the CSV data will be written.
         data (`List[List[Any]]`):
-            The data to write to the CSV file (each inner list represents a row).
+            The data to write to the CSV file
+            (each inner list represents a row).
         overwrite (`bool`):
             Whether to overwrite the file if it already exists.
 
@@ -103,23 +105,28 @@ class PlannerAgent(AgentBase):
         sys_prompt: str,
         model_config_name: str,
         service_toolkit: ServiceToolkit,
-        profile: str = "Planner",
-        **kwargs: Any,
     ):
         super().__init__(
             name=name,
             sys_prompt=sys_prompt,
             model_config_name=model_config_name,
         )
-        self.profile = profile
         self.service_toolkit = service_toolkit
 
-    def _extract_task(self, messages: List[Msg]) -> str:
-        return messages.content
+    def __call__(self, x: Msg) -> List[Dict[str, Any]]:
+        return self.plan(x)
 
-    def reply(self, messages: Msg) -> List[Dict[str, Any]]:
-        messages = messages.content
-        # task = self._extract_task(messages)
+    def plan(self, x: Msg) -> List[Dict[str, Any]]:
+        """
+        Decompose the task provided in the message into subtasks.
+
+        Args:
+            x (Msg): Message containing the task to be decomposed.
+
+        Returns:
+            List[Dict[str, Any]]: List of subtasks as dictionaries.
+        """
+        messages = x.content
         subtasks = self._decompose_task(messages)
         return subtasks
 
@@ -130,10 +137,6 @@ class PlannerAgent(AgentBase):
     ) -> List[Dict[str, Any]]:
         # Implement task decomposition
         message = [
-            # {
-            # "role": "system",
-            # "content": "You are a helpful assistant.",
-            # },
             {
                 "role": "user",
                 "content": f"""
@@ -183,10 +186,9 @@ class VerifierAgent(ReActAgent):
         sys_prompt: str,
         model_config_name: str,
         service_toolkit: ServiceToolkit,
-        profile: str = "Verifier",
+        *,
         max_iters: int = 10,
         verbose: bool = True,
-        **kwargs: Any,
     ):
         super().__init__(
             name=name,
@@ -195,12 +197,9 @@ class VerifierAgent(ReActAgent):
             service_toolkit=service_toolkit,
             max_iters=max_iters,
             verbose=verbose,
-            **kwargs,
         )
-        self.profile = profile
-        self.working_memory = []
 
-    def reply(self, result: Msg) -> str:
+    def reply(self, x: Optional[Union[Msg, Sequence[Msg]]] = None) -> Msg:
         Verification_PROMPT = """- Given `overall_task` and `solved_dependent_sub_tasks` as context, verify if the information in `result` can succesfully solve `current_sub_task` with your reasoning trace.
         - If you think code or tools are helpful for verification, use `execute_python_code` and/or other tools available to do verification.
         - Do not simply trust the claim in `result`. VERIFY IT.
@@ -211,7 +210,7 @@ class VerifierAgent(ReActAgent):
         msg = Msg(
             name="Verifier",
             role="system",
-            content=Verification_PROMPT + result.content,
+            content=Verification_PROMPT + x.content,
         )
         verdict = super().reply(msg)
 
@@ -232,24 +231,20 @@ class SynthesizerAgent(AgentBase):
         name: str,
         sys_prompt: str,
         model_config_name: str,
-        profile: str = "Synthesizer",
-        **kwargs: Any,
     ):
         super().__init__(
             name=name,
             sys_prompt=sys_prompt,
             model_config_name=model_config_name,
         )
-        self.profile = profile
-        self.working_memory = []
 
-    def reply(self, results: Msg) -> Msg:
+    def reply(self, x: Optional[Union[Msg, Sequence[Msg]]] = None) -> Msg:
         Synthesize_PROMPT = """Given `overall_task` and all solved `subtasks`, synthesize the result of each tasks and give a answer for `overall_task`."""
 
         message = [
             {
                 "role": "user",
-                "content": Synthesize_PROMPT + "  " + results.content,
+                "content": Synthesize_PROMPT + "  " + x.content,
             },
         ]
         final_answer_str: str = self.model(message).text.strip()
@@ -276,20 +271,33 @@ class ReplanningAgent(AgentBase):
         sys_prompt: str,
         model_config_name: str,
         service_toolkit: ServiceToolkit,
-        profile: str = "Replanner",
-        **kwargs: Any,
     ):
         super().__init__(
             name=name,
             sys_prompt=sys_prompt,
             model_config_name=model_config_name,
         )
-        self.profile = profile
-        self.working_memory = []
         self.service_toolkit = service_toolkit
 
-    def reply(self, task: Msg) -> Tuple[str, Any]:
-        task = task.content
+    def __call__(self, x: Msg) -> Tuple[str, Any]:
+        return self.replan(x)
+
+    def replan(self, x: Msg) -> Tuple[str, Any]:
+        """
+        Decide to replan or decompose a subtask based on the given message.
+
+        Args:
+            x (Msg): Message containing the current task and context.
+
+        Returns:
+            Tuple[str, Any]: ('replan_subtask', new_tasks) or
+                ('decompose_subtask', subtasks), depending on the decision.
+
+        Raises:
+            ValueError: If unable to determine how to revise the subtask.
+        """
+
+        task = x.content
         revising_PROMPT = """Based on `overall_task` and all solved `subtasks`, and the `VERDICT`, decide if it is better to :
         1. come out with another subtask in place of `current_sub_task` if you think the reason `current_sub_task` is unsolvable is it is infeasible to solve;
         2. further break `current_sub_task` into more subtasks if you think the reason `current_sub_task` is unsolvable is it is still too complex.
