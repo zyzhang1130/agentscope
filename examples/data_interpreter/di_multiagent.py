@@ -173,7 +173,7 @@ def main() -> None:
                         + str(subtasks),
                     )
                     revised_subtasks = replanning_agent(msg)
-                result = sovler_agent(msg)
+                result = solver_agent(msg)
                 # if "Let me know how you'd like to proceed!" in result.content:
                 #     failure_count = max_failure+1
                 msg = Msg(
@@ -265,8 +265,8 @@ def main() -> None:
         service_toolkit=service_toolkit,
     )
 
-    sovler_agent = ReActAgent(
-        name="sovler",
+    solver_agent = ReActAgent(
+        name="solver",
         sys_prompt="You're a helpful assistant.",
         model_config_name="lite_llm_claude",
         service_toolkit=service_toolkit,
