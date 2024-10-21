@@ -32,9 +32,9 @@ class TestZhipuAIChatWrapper(unittest.TestCase):
                 "total_tokens": 105,
             },
         }
-        mock_response.choices[
-            0
-        ].message.content = "Hello, this is a mocked response!"
+        mock_response.choices[0].message.content = (
+            "Hello, this is a mocked response!"
+        )
         mock_zhipuai_client = MagicMock()
         mock_zhipuai.ZhipuAI.return_value = mock_zhipuai_client
 

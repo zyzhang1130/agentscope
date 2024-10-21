@@ -31,9 +31,9 @@ class TestLiteLLMChatWrapper(unittest.TestCase):
                 "total_tokens": 105,
             },
         }
-        mock_response.choices[
-            0
-        ].message.content = "Hello, this is a mocked response!"
+        mock_response.choices[0].message.content = (
+            "Hello, this is a mocked response!"
+        )
 
         mock_litellm.return_value = mock_response
 

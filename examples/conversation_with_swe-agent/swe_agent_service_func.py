@@ -37,9 +37,11 @@ def exec_py_linting(file_path: str) -> ServiceResponse:
         )
         return ServiceResponse(
             status=ServiceExecStatus.SUCCESS,
-            content=result.stdout.strip()
-            if result.stdout
-            else "No lint errors found.",
+            content=(
+                result.stdout.strip()
+                if result.stdout
+                else "No lint errors found."
+            ),
         )
     except subprocess.CalledProcessError as e:
         error_message = (

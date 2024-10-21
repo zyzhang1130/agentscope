@@ -123,9 +123,9 @@ class ASDiGraph(nx.DiGraph):
             except Exception:
                 return code
 
-        self.inits[
-            0
-        ] = f'agentscope.init(logger_level="DEBUG", {kwarg_converter(kwargs)})'
+        self.inits[0] = (
+            f'agentscope.init(logger_level="DEBUG", {kwarg_converter(kwargs)})'
+        )
 
         sorted_nodes = list(nx.topological_sort(self))
         sorted_nodes = [
