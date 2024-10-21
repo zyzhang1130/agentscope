@@ -31,17 +31,47 @@ These models are tested in this example. For other models, some modifications ma
 To run this example, you need:
 
 - **Python 3.x**
+
 - **Agentscope** package installed:
+
   ```bash
   pip install agentscope
   ```
-- **Code Execution Environment**: comment the following in `src/agentscope/service/execute_code/exec_python.py`
+
 - **Environment Variables**: Set up the following environment variables with your API keys. This can be done in a `.env` file or directly in your environment.
+
   - `OPENAI_API_KEY` (if using OpenAI models)
   - `DASHSCOPE_API_KEY` (if using DashScope models)
   - `ANTHROPIC_API_KEY` (required for using Claude models via `litellm`)
+
+- **Code Execution Environment**: Modify the code execution restrictions in Agentscope to allow the necessary operations for your tasks. Specifically, comment out the following `os` functions and `sys` modules in the `os_funcs_to_disable` and `sys_modules_to_disable` lists located in:
+
+  ```plaintext
+  src/agentscope/service/execute_code/exec_python.py
+  ```
+
+  **Comment out these `os` functions in `os_funcs_to_disable`:**
+
+  - `putenv`
+  - `remove`
+  - `unlink`
+  - `getcwd`
+  - `chdir`
+
+  **Comment out these modules in `sys_modules_to_disable`:**
+
+  - `joblib`
+
+  This step enables the executed code by the agents to perform required operations that are otherwise restricted by default. Ensure you understand the security implications of modifying these restrictions.
+
 - **Optional Packages** (if needed for specific tools or extended functionalities):
+
   - `litellm` for interacting with the Claude model.
+
+    ```bash
+    pip install litellm
+    ```
+
   - Additional Python libraries as required by your code (e.g., `csv`, `dotenv`).
 
 Ensure that you have the necessary API access and that your environment is correctly configured to use the specified models.
