@@ -73,7 +73,7 @@ def extract_scenario_and_participants(content: str) -> dict:
     participants_dict = {}
     for match in participants_matches:
         participant_type, characteristic = match.groups()
-                participants_dict[
+        participants_dict[
             participant_type.strip().replace(" ", "_")
         ] = characteristic.strip()
     result["Participants"] = participants_dict

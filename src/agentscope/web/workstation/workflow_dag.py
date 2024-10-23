@@ -123,7 +123,7 @@ class ASDiGraph(nx.DiGraph):
             except Exception:
                 return code
 
-                self.inits[
+        self.inits[
             0
         ] = f'agentscope.init(logger_level="DEBUG", {kwarg_converter(kwargs)})'
 
