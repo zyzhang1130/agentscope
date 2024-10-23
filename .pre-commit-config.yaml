@@ -58,7 +58,7 @@ repos:
       - id: flake8
         args: ["--extend-ignore=E203"]
   - repo: https://github.com/pylint-dev/pylint
-    rev: v3.0.4
+    rev: v3.0.2
     hooks:
       - id: pylint
         exclude:
