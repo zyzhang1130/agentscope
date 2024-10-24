@@ -99,3 +99,56 @@ To run this example, you need:
   - Additional Python libraries as required by your code (e.g., `csv`, `dotenv`).
 
 Ensure that you have the necessary API access and that your environment is correctly configured to use the specified models.
+
+## Examples
+
+This section demonstrates the pipeline's effectiveness on two different complex tasks.
+
+### Task 1: Mathematical Problem Solving
+
+**Problem**: Solve this math problem: The greatest common divisor of positive integers m and n is 6. The least common multiple of m and n is 126. What is the least possible value of m + n?
+
+**Solution Output**:
+```
+Based on the results of the subtasks, we can synthesize the solution to the overall task as follows:
+
+1. Functions for calculating GCD and LCM were defined and saved.
+2. Possible pairs of m and n that satisfy the conditions (GCD = 6 and LCM = 126) were found to be (6, 126) and (18, 42).
+3. The least possible value of m + n was calculated.
+
+The answer to the overall task is:
+
+The least possible value of m + n is 60, where m = 18 and n = 42.
+
+This solution satisfies all the given conditions:
+- The greatest common divisor of m and n is 6.
+- The least common multiple of m and n is 126.
+- The sum of m and n (18 + 42 = 60) is the least possible value among the valid pairs.
+```
+
+### Task 2: Titanic Survival Prediction
+
+**Problem**: Predict passenger survival outcomes using the Titanic dataset. Perform data analysis, preprocessing, feature engineering, and modeling. Report accuracy on the evaluation data.
+
+**Solution Output**:
+```
+The Titanic passenger survival prediction task has been successfully completed. Here's a summary of the process and results:
+
+1. Data Analysis:
+   - The training dataset contained 712 entries with 12 columns.
+   - The target variable 'Survived' had a 37.5% overall survival rate.
+   - Key factors influencing survival included Sex (females had a higher survival rate) and Passenger Class.
+
+2. Data Preprocessing and Feature Engineering:
+   - Missing values were handled through imputation or dropping columns.
+   - New features were created, including 'Title' and 'FamilySize'.
+   - Categorical variables were encoded, and unnecessary columns were dropped.
+   - The final preprocessed dataset had 712 samples and 10 features.
+
+3. Modeling:
+   - Three models were trained and evaluated: Logistic Regression, Random Forest, and Gradient Boosting.
+   - Gradient Boosting performed the best in cross-validation with an accuracy of 0.8160.
+
+4. Final Evaluation:
+   - The best model (Gradient Boosting) was used to make predictions on the evaluation dataset.
+   - The final accuracy on the evaluation data (179 samples) was 0.8212 (82.12%).
