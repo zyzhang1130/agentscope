@@ -30,8 +30,6 @@ These models are tested in this example. For other models, some modifications ma
 
 To run this example, you need:
 
-- **Python 3.x**
-
 - **Agentscope** package installed:
 
   ```bash
@@ -63,6 +61,32 @@ To run this example, you need:
   - `joblib`
 
   This step enables the executed code by the agents to perform required operations that are otherwise restricted by default. Ensure you understand the security implications of modifying these restrictions.
+
+- Comment out the following in `src/agentscope/utils/common.py`:
+    ```python
+    @contextlib.contextmanager
+    def create_tempdir() -> Generator:
+        """
+        A context manager that creates a temporary directory and changes the
+        current working directory to it.
+        The implementation of this contextmanager are borrowed from
+        https://github.com/openai/human-eval/blob/master/human_eval/execution.py
+        """
+        with tempfile.TemporaryDirectory() as dirname:
+            with _chdir(dirname):
+                yield dirname
+    ```
+
+    and add
+    ```python
+    @contextlib.contextmanager
+    def create_tempdir() -> Generator:
+        """
+        A context manager that uses the curreny directory.
+        """
+        yield
+    ```
+    to use the current directory for code execution.
 
 - **Optional Packages** (if needed for specific tools or extended functionalities):
 

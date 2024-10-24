@@ -13,8 +13,7 @@ import signal
 import socket
 import string
 import sys
-
-# import tempfile
+import tempfile
 import threading
 from typing import Any, Generator, Optional, Union, Tuple, Literal, List
 from urllib.parse import urlparse
@@ -58,25 +57,17 @@ def timer(seconds: Optional[Union[int, float]] = None) -> Generator:
         signal.setitimer(signal.ITIMER_REAL, 0)
 
 
-# @contextlib.contextmanager
-# def create_tempdir() -> Generator:
-#     """
-#     A context manager that creates a temporary directory and changes the
-#     current working directory to it.
-#     The implementation of this contextmanager are borrowed from
-#     https://github.com/openai/human-eval/blob/master/human_eval/execution.py
-#     """
-#     with tempfile.TemporaryDirectory() as dirname:
-#         with _chdir(dirname):
-#             yield dirname
-
-
 @contextlib.contextmanager
 def create_tempdir() -> Generator:
     """
-    A context manager that uses the curreny directory.
+    A context manager that creates a temporary directory and changes the
+    current working directory to it.
+    The implementation of this contextmanager are borrowed from
+    https://github.com/openai/human-eval/blob/master/human_eval/execution.py
     """
-    yield
+    with tempfile.TemporaryDirectory() as dirname:
+        with _chdir(dirname):
+            yield dirname
 
 
 @contextlib.contextmanager
